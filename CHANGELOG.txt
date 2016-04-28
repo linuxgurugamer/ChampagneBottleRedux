@@ -1,0 +1,3 @@
+﻿0.3		Initial Release
+		Incorporated both Blizzy & stock toolbar
+		Simple cfg file to control whether blizzy is used or not

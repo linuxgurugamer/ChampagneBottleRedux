@@ -1,0 +1,10 @@
+<C> <adjs> <nouns>
+<C> <adjs> <titles>
+<C> <'peoples> <nouns>
+<C> <'nouns> <nouns>
+<C> <nouns>-<nouns>
+<C> <cat_adjs> <cat_nouns>
+<C> <cat_adjs> <cat_titles>
+<C> <'cat_peoples> <cat_nouns>
+<C> <'cat_nouns> <cat_nouns>
+<C> <cat_nouns>-<cat_nouns>
