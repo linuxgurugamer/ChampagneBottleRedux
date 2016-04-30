@@ -43,7 +43,7 @@ copy /Y "README.md" "%HOMEDIR%\install\GameData\Champagne"
 copy /Y MiniAVC.dll  "%HOMEDIR%\install\GameData\Champagne"
 
 
-copy /Y "%~dp0ChampagneBottle.cfg" "%HOMEDIR%\install\GameData\Champagne"
+copy /Y "%~dp0GameData\ChampagneBottle.cfg" "%HOMEDIR%\install\GameData\Champagne"
 copy /Y "%~dp0Gamedata\*.txt" "%HOMEDIR%\install\GameData\Champagne""
 
 

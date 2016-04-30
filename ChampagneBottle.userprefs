@@ -1,13 +1,14 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Release" />
-  <MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workbench ActiveDocument="ChampagneBottle.version">
     <Files>
-      <File FileName="Champagne.cs" Line="79" Column="16" />
-      <File FileName="ChampagneSettings.cs" Line="1" Column="1" />
+      <File FileName="Champagne.cs" Line="124" Column="31" />
+      <File FileName="ChampagneSettings.cs" Line="50" Column="21" />
       <File FileName="ToolbarWrapper.cs" Line="1" Column="1" />
-      <File FileName="ChampagneBottle.version" Line="15" Column="1" />
-      <File FileName="CHANGELOG.txt" Line="3" Column="59" />
-      <File FileName="deploy.bat" Line="15" Column="1" />
+      <File FileName="ChampagneBottle.version" Line="17" Column="1" />
+      <File FileName="CHANGELOG.txt" Line="1" Column="1" />
+      <File FileName="deploy.bat" Line="16" Column="82" />
+      <File FileName="buildRelease.bat" Line="35" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

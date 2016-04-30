@@ -111,14 +111,17 @@ namespace ChampagneBottle
 			if (_appLauncherButton == null)
 				_appLauncherButton = InitAppLauncherButton();
 
-			addToToolbar ();
+
 
 			cfg = ChampagneSettings.Instance;
 			cfg.LoadSettings();
+			if (cfg.blizzyToolbar)
+				addToToolbar ();
 		}
 
 		void addToToolbar ()
 		{
+			Debug.Log ("addToToolbar");
 			if (!ToolbarManager.ToolbarAvailable || !cfg.blizzyToolbar)
 				return;
 			Debug.Log ("Starting Toolbar button!"); 

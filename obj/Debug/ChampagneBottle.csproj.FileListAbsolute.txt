@@ -17,3 +17,22 @@ D:\Users\jbb\github\Champagne Bottle\bin\Debug\Mono.Security.dll
 D:\Users\jbb\github\Champagne Bottle\bin\Debug\UnityEngine.xml
 D:\Users\jbb\github\Champagne Bottle\obj\Debug\ChampagneBottle.dll
 D:\Users\jbb\github\Champagne Bottle\obj\Debug\ChampagneBottle.pdb
+D:\Users\jbb\github\ChampagneBottleRedux\bin\Debug\ChampagneBottle.dll
+D:\Users\jbb\github\ChampagneBottleRedux\bin\Debug\ChampagneBottle.pdb
+D:\Users\jbb\github\ChampagneBottleRedux\bin\Debug\Assembly-CSharp-firstpass.dll
+D:\Users\jbb\github\ChampagneBottleRedux\bin\Debug\Assembly-CSharp.dll
+D:\Users\jbb\github\ChampagneBottleRedux\bin\Debug\KSPUtil.dll
+D:\Users\jbb\github\ChampagneBottleRedux\bin\Debug\System.dll
+D:\Users\jbb\github\ChampagneBottleRedux\bin\Debug\UnityEngine.dll
+D:\Users\jbb\github\ChampagneBottleRedux\bin\Debug\UnityEngine.UI.dll
+D:\Users\jbb\github\ChampagneBottleRedux\bin\Debug\SaveUpgradePipeline.Core.dll
+D:\Users\jbb\github\ChampagneBottleRedux\bin\Debug\TrackIRUnity.dll
+D:\Users\jbb\github\ChampagneBottleRedux\bin\Debug\KSPAssets.dll
+D:\Users\jbb\github\ChampagneBottleRedux\bin\Debug\Mono.Cecil.dll
+D:\Users\jbb\github\ChampagneBottleRedux\bin\Debug\Vectrosity.dll
+D:\Users\jbb\github\ChampagneBottleRedux\bin\Debug\TDx.TDxInput.dll
+D:\Users\jbb\github\ChampagneBottleRedux\bin\Debug\Mono.Security.dll
+D:\Users\jbb\github\ChampagneBottleRedux\bin\Debug\UnityEngine.xml
+D:\Users\jbb\github\ChampagneBottleRedux\obj\Debug\ChampagneBottle.csprojResolveAssemblyReference.cache
+D:\Users\jbb\github\ChampagneBottleRedux\obj\Debug\ChampagneBottle.dll
+D:\Users\jbb\github\ChampagneBottleRedux\obj\Debug\ChampagneBottle.pdb
