@@ -83,7 +83,7 @@ namespace ChampagneBottle
 		private static String _path = "/GameData/Champagne/";
 		private readonly String[] _generatedNames = new String[5];
 
-		private bool _generated;
+		private static bool _generated = false;
 
 		//private float _lastFixedUpdate;
 		private const float LogInterval = 5.0f;
@@ -403,6 +403,8 @@ namespace ChampagneBottle
 			EditorLogic.fetch.Lock(true, true, true, "ChampagneLocked");
 			//_editorLocked = true;
 			activated = true;
+			if (cfg.selectLanguageEveryTime)
+				_generated = false;
 		}
 
 		public static void OnAppLauncherFalse()

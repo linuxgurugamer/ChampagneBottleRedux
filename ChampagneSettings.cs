@@ -12,7 +12,7 @@ namespace ChampagneBottle
 
 		public bool blizzyToolbar = false;
 		public string patternfile = "patterns.txt";
-
+		public bool selectLanguageEveryTime = false;
 
 
 		public static readonly String ROOT_PATH = KSPUtil.ApplicationRootPath;
@@ -62,9 +62,11 @@ namespace ChampagneBottle
 
 						blizzyToolbar = bool.Parse (SafeLoad (settings.GetValue ("blizzy"), blizzyToolbar));
 						patternfile = SafeLoad (settings.GetValue ("patterns"), patternfile);
+						selectLanguageEveryTime = bool.Parse(SafeLoad(settings.GetValue("selectLanguageEveryTime"), selectLanguageEveryTime));
 
 						Debug.Log ("blizzyToolbar: " + blizzyToolbar.ToString ());
 						Debug.Log ("patternfile: " + patternfile);
+						Debug.Log("selectLanguageEveryTime: " + selectLanguageEveryTime.ToString());
 					} else {
 						Debug.Log ("No ChampagneBottle settings found");
 					}
