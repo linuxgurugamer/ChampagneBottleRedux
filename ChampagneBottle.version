@@ -1,16 +1,26 @@
 ﻿{
-	"NAME":"ChampagneBottleRedux",
-	"URL":"http://ksp-avc.cybutek.net/version.php?id=289",
-	"DOWNLOAD":"http://spacedock.info/mod/613/Champagne%20Bottle%20Redux",
-	"VERSION":{
-		"MAJOR":0
-		"MINOR":3,
-		"PATCH":3,
-		"BUILD":0
-	},
-	"KSP_VERSION":{
-		"MAJOR":1,
-		"MINOR":1,
-		"PATCH":0
-	}
+  "NAME": "ChampagneBottleRedux",
+  "URL": "http://ksp-avc.cybutek.net/version.php?id=289",
+  "DOWNLOAD": "http://spacedock.info/mod/613/Champagne%20Bottle%20Redux",
+  "VERSION": {
+    "MAJOR": 0,
+    "MINOR": 3,
+    "PATCH": 3,
+    "BUILD": 1
+  },
+  "KSP_VERSION": {
+    "MAJOR": 1,
+    "MINOR": 1,
+    "PATCH": 0
+  },
+  "KSP_VERSION_MIN": {
+    "MAJOR": 1,
+    "MINOR": 1,
+    "PATCH": 0
+  },
+  "KSP_VERSION_MAX": {
+    "MAJOR": 1,
+    "MINOR": 1,
+    "PATCH": 99
+  }
 }

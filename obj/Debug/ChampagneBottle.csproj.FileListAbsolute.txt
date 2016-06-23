@@ -36,3 +36,4 @@ D:\Users\jbb\github\ChampagneBottleRedux\bin\Debug\UnityEngine.xml
 D:\Users\jbb\github\ChampagneBottleRedux\obj\Debug\ChampagneBottle.csprojResolveAssemblyReference.cache
 D:\Users\jbb\github\ChampagneBottleRedux\obj\Debug\ChampagneBottle.dll
 D:\Users\jbb\github\ChampagneBottleRedux\obj\Debug\ChampagneBottle.pdb
+D:\Users\jbb\github\ChampagneBottleRedux\bin\Debug\System.Xml.dll

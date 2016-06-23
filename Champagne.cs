@@ -19,8 +19,8 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Reflection;
+//using System.Linq;
+//using System.Reflection;
 using System.Text.RegularExpressions;
 using UnityEngine;
 using Random = System.Random;
@@ -66,7 +66,7 @@ namespace ChampagneBottle
      */
 
 
-	[KSPAddon(KSPAddon.Startup.EditorAny, false)]
+	[KSPAddon(KSPAddon.Startup.EditorAny  /* | KSPAddon.Startup.Flight */ , false)]
 	public class ChampagneBottle : MonoBehaviour
 	{
 		private static List<String> _patterns;

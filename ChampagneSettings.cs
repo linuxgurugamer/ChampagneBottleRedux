@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace ChampagneBottle
 {
-	[KSPAddon (KSPAddon.Startup.EditorAny, false)]
+	[KSPAddon (KSPAddon.Startup.EditorAny  /* | KSPAddon.Startup.Flight */, false)]
 	class ChampagneSettings
 	{
 
@@ -21,8 +21,8 @@ namespace ChampagneBottle
 		private static String NODENAME = "ChampagneBottle";
 		private static String CFG_FILE = BASE_FOLDER + "ChampagneBottle.cfg";
 
-		private static ConfigNode configFile = null;
-		private static ConfigNode configFileNode = null;
+		//private static ConfigNode configFile = null;
+		//private static ConfigNode configFileNode = null;
 
 
 		private ChampagneSettings ()
