@@ -20,15 +20,12 @@ D:\Users\jbb\github\ChampagneBottleRedux\bin\Release\ChampagneBottle.dll
 D:\Users\jbb\github\ChampagneBottleRedux\bin\Release\ChampagneBottle.pdb
 D:\Users\jbb\github\ChampagneBottleRedux\bin\Release\Assembly-CSharp-firstpass.dll
 D:\Users\jbb\github\ChampagneBottleRedux\bin\Release\Assembly-CSharp.dll
-D:\Users\jbb\github\ChampagneBottleRedux\bin\Release\KSPUtil.dll
 D:\Users\jbb\github\ChampagneBottleRedux\bin\Release\System.dll
 D:\Users\jbb\github\ChampagneBottleRedux\bin\Release\UnityEngine.dll
 D:\Users\jbb\github\ChampagneBottleRedux\bin\Release\UnityEngine.UI.dll
-D:\Users\jbb\github\ChampagneBottleRedux\bin\Release\SaveUpgradePipeline.Core.dll
 D:\Users\jbb\github\ChampagneBottleRedux\bin\Release\TrackIRUnity.dll
 D:\Users\jbb\github\ChampagneBottleRedux\bin\Release\KSPAssets.dll
 D:\Users\jbb\github\ChampagneBottleRedux\bin\Release\Mono.Cecil.dll
-D:\Users\jbb\github\ChampagneBottleRedux\bin\Release\Vectrosity.dll
 D:\Users\jbb\github\ChampagneBottleRedux\bin\Release\TDx.TDxInput.dll
 D:\Users\jbb\github\ChampagneBottleRedux\bin\Release\Mono.Security.dll
 D:\Users\jbb\github\ChampagneBottleRedux\bin\Release\UnityEngine.xml

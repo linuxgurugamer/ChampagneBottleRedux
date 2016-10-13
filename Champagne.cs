@@ -414,7 +414,8 @@ namespace ChampagneBottle
 				Debug.LogError("ChampagneBottle -- OnAppLauncherFalse called without a button?!?");
 				return;
 			}
-			EditorLogic.fetch.Unlock("ChampagneLocked");
+            if (EditorLogic.fetch != null)
+			    EditorLogic.fetch.Unlock("ChampagneLocked");
 			//_editorLocked = false;
 			activated = false;
 		}
