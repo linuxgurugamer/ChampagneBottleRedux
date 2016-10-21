@@ -1,4 +1,8 @@
-﻿0.3.3
+﻿0.3.5
+		Fixed problem with ToolbarWrapper.cs
+0.3.4	
+		updated for 1.2
+0.3.3
 		Added cfg option: selectLanguageEveryTime
 
 0.3		Initial Release

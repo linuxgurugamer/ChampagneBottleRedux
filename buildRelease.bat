@@ -29,9 +29,9 @@ mkdir %HOMEDIR%\install\GameData\Champagne
 mkdir %HOMEDIR%\install\GameData\Champagne\Textures
 mkdir %HOMEDIR%\install\GameData\Champagne\Plugins
 
-del %HOMEDIR%\install\GameData\Champagne
-del %HOMEDIR%\install\GameData\Champagne\Textures
-del %HOMEDIR%\install\GameData\Champagne\Plugins
+del /q %HOMEDIR%\install\GameData\Champagne
+del /q %HOMEDIR%\install\GameData\Champagne\Textures
+del /q %HOMEDIR%\install\GameData\Champagne\Plugins
 
 
 copy /Y "%~dp0bin\Release\ChampagneBottle.dll" "%HOMEDIR%\install\GameData\Champagne\PlugIns"
