@@ -29,7 +29,6 @@ D:\Users\jbb\github\ChampagneBottleRedux\bin\Release\Mono.Cecil.dll
 D:\Users\jbb\github\ChampagneBottleRedux\bin\Release\TDx.TDxInput.dll
 D:\Users\jbb\github\ChampagneBottleRedux\bin\Release\Mono.Security.dll
 D:\Users\jbb\github\ChampagneBottleRedux\bin\Release\UnityEngine.xml
-D:\Users\jbb\github\ChampagneBottleRedux\obj\Release\ChampagneBottle.csprojResolveAssemblyReference.cache
 D:\Users\jbb\github\ChampagneBottleRedux\obj\Release\ChampagneBottle.dll
 D:\Users\jbb\github\ChampagneBottleRedux\obj\Release\ChampagneBottle.pdb
 D:\Users\jbb\github\ChampagneBottleRedux\bin\Release\System.Xml.dll

@@ -36,7 +36,8 @@ del /q %HOMEDIR%\install\GameData\Champagne\Plugins
 
 copy /Y "%~dp0bin\Release\ChampagneBottle.dll" "%HOMEDIR%\install\GameData\Champagne\PlugIns"
 copy /Y "%~dp0GameData\Textures\*.png" "%HOMEDIR%\install\GameData\Champagne\Textures"
-copy /Y "%~dp0ChampagneBottle.version "%HOMEDIR%\install\GameData\Champagne"
+         
+copy /Y ChampagneBottle.version "%HOMEDIR%\install\GameData\Champagne"
 
 copy /Y "License.txt" "%HOMEDIR%\install\GameData\Champagne"
 copy /Y "README.md" "%HOMEDIR%\install\GameData\Champagne"
