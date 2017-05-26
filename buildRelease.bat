@@ -40,7 +40,7 @@ set VERSION=%major%.%minor%.%patch%
 if "%build%" NEQ "0"  set VERSION=%VERSION%.%build%
 
 echo Version:  %VERSION%
-pause
+
 
 mkdir %HOMEDIR%\install\GameData\Champagne
 mkdir %HOMEDIR%\install\GameData\Champagne\Textures
