@@ -1,7 +1,7 @@
 ﻿rem unusable line
 
 
-set H=R:\KSP_1.1.4_dev
+set H=R:\KSP_1.3.0_dev
 echo %H%
 
 set d=%H%
