@@ -45,3 +45,4 @@ Temporary Items
 *.dll
 *.pdb
 *~
+.vs

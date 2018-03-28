@@ -4,15 +4,13 @@ using UnityEngine;
 
 namespace ChampagneBottle
 {
-	[KSPAddon (KSPAddon.Startup.EditorAny  /* | KSPAddon.Startup.Flight */, false)]
 	class ChampagneSettings
 	{
 
-		private static readonly ChampagneSettings instance = new ChampagneSettings ();
 
-		public bool blizzyToolbar = false;
+		//public bool blizzyToolbar = false;
 		public string patternfile = "patterns.txt";
-		public bool selectLanguageEveryTime = false;
+		//public bool selectLanguageEveryTime = false;
 
 
 		public static readonly String ROOT_PATH = KSPUtil.ApplicationRootPath;
@@ -21,19 +19,6 @@ namespace ChampagneBottle
 		private static String NODENAME = "ChampagneBottle";
 		private static String CFG_FILE = BASE_FOLDER + "ChampagneBottle.cfg";
 
-		//private static ConfigNode configFile = null;
-		//private static ConfigNode configFileNode = null;
-
-
-		private ChampagneSettings ()
-		{
-		}
-
-		public static ChampagneSettings Instance {
-			get {
-				return instance; 
-			}
-		}
 
 		public static List<String> ShipTypes = new List<String> ();
 
@@ -60,13 +45,13 @@ namespace ChampagneBottle
 					if (settings != null) {
 						Debug.Log ("ChampagneBottle: Load Settings: " + settings.ToString ());
 
-						blizzyToolbar = bool.Parse (SafeLoad (settings.GetValue ("blizzy"), blizzyToolbar));
+						//blizzyToolbar = bool.Parse (SafeLoad (settings.GetValue ("blizzy"), blizzyToolbar));
 						patternfile = SafeLoad (settings.GetValue ("patterns"), patternfile);
-						selectLanguageEveryTime = bool.Parse(SafeLoad(settings.GetValue("selectLanguageEveryTime"), selectLanguageEveryTime));
+						//selectLanguageEveryTime = bool.Parse(SafeLoad(settings.GetValue("selectLanguageEveryTime"), selectLanguageEveryTime));
 
-						Debug.Log ("blizzyToolbar: " + blizzyToolbar.ToString ());
+						//Debug.Log ("blizzyToolbar: " + blizzyToolbar.ToString ());
 						Debug.Log ("patternfile: " + patternfile);
-						Debug.Log("selectLanguageEveryTime: " + selectLanguageEveryTime.ToString());
+						//Debug.Log("selectLanguageEveryTime: " + selectLanguageEveryTime.ToString());
 					} else {
 						Debug.Log ("No ChampagneBottle settings found");
 					}

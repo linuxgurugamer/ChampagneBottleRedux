@@ -26,6 +26,10 @@ using UnityEngine;
 using Random = System.Random;
 using KSP.UI.Screens;
 
+using ClickThroughFix;
+using ToolbarControl_NS;
+
+
 namespace ChampagneBottle
 {
 	/*
@@ -66,7 +70,7 @@ namespace ChampagneBottle
      */
 
 
-	[KSPAddon(KSPAddon.Startup.EditorAny  /* | KSPAddon.Startup.Flight */ , false)]
+	[KSPAddon(KSPAddon.Startup.EditorAny, false)]
 	public class ChampagneBottle : MonoBehaviour
 	{
 		private static List<String> _patterns;
@@ -83,77 +87,36 @@ namespace ChampagneBottle
 		private static String _path = "/GameData/Champagne/";
 		private readonly String[] _generatedNames = new String[5];
 
-		private static bool _generated = false;
-
-		//private float _lastFixedUpdate;
+		private bool _generated = false;
+        private static bool languageSelected = false;
+        
 		private const float LogInterval = 5.0f;
-
-		//protected Rect WindowPos = new Rect(128, 32, 320, 0);
+        
 		protected Rect WindowPos = new Rect(Screen.width/2, Screen.height/2, 320, 0);
-		public static ApplicationLauncherButton _appLauncherButton = null;
-		private IButton toolbarButton = null;
+        ToolbarControl toolbarControl = null;
+        
 
-	//	public static bool blizzyToolbar = false;
+		ChampagneSettings cfg;
 
-		static ChampagneSettings cfg;
+        #region Unity Stuff
 
-		#region Unity Stuff
+        // Called after the scene is loaded.
+        private void Awake()
+        {
+            cfg = new ChampagneSettings();
+            cfg.LoadSettings();
 
-		// Called after the scene is loaded.
-		private void Awake()
-		{
-			_wordLists = new Dictionary<string, List<string>>();
+            _wordLists = new Dictionary<string, List<string>>();
 
-			Debug.Log("ChampagneBottle [" + GetInstanceID().ToString("X")
-					  + "][" + Time.time.ToString("0.0000") + "]: Awake: " + name);
+            Debug.Log("ChampagneBottle [" + GetInstanceID().ToString("X")
+                      + "][" + Time.time.ToString("0.0000") + "]: Awake: " + name);
 
-			// Create the applauncher button and register the GUI for drawing
-			if (_appLauncherButton == null)
-				_appLauncherButton = InitAppLauncherButton();
+            InitAppLauncherButton();
 
+        }
 
-
-			cfg = ChampagneSettings.Instance;
-			cfg.LoadSettings();
-			if (cfg.blizzyToolbar)
-				addToToolbar ();
-		}
-
-		void addToToolbar ()
-		{
-			Debug.Log ("addToToolbar");
-			if (!ToolbarManager.ToolbarAvailable || !cfg.blizzyToolbar)
-				return;
-			Debug.Log ("Starting Toolbar button!"); 
-			bool state1 = false;
-			toolbarButton = ToolbarManager.Instance.add ("Champagne", "toggle");
-			toolbarButton.TexturePath = "Champagne/Textures/icon_button";
-			toolbarButton.ToolTip = "Toggle Champagne Bottle window";
-			toolbarButton.OnClick += (e) => {
-				Debug.Log ("button1 clicked, mouseButton: " + e.MouseButton);
-				//button1.TexturePath = state1 ? "000_Toolbar/img_buttonTypeMNode" : "000_Toolbar/icon";
-				state1 = !state1;
-				toggleToolbarButton (state1);
-			};
-			toolbarButton.Visible = true;
-			if (toolbarButton.EffectivelyVisible)
-				ChampagneBottle.RemoveAppLauncherButton (ChampagneBottle._appLauncherButton);
-			Debug.Log ("Done starting Toolbar button!"); 
-		}
-
-		private void toggleToolbarButton (bool show)
-		{
-
-			if (show && cfg.blizzyToolbar) {
-				//start the GUI
-				OnAppLauncherTrue ();
-			} else {
-				//close the GUI
-				OnAppLauncherFalse ();
-			}
-		}
         // Called next.
-		private void Start()
+        private void Start()
 		{
 			try
 			{
@@ -161,32 +124,39 @@ namespace ChampagneBottle
 				          + "][" + Time.time.ToString("0.0000") + "]: Start");
 
 				_patterns = LoadList(KSPUtil.ApplicationRootPath + _path + "patterns.txt");
-			}
+
+
+            }
 			catch (Exception ex)
 			{
 				Debug.LogError(ex.ToString());
 			}
+ ;
 		}
 		private void OnGUI()
 		{
-			DrawGui ();
+            if (toolbarControl != null)
+                toolbarControl.UseBlizzy(HighLogic.CurrentGame.Parameters.CustomParams<CB>().useBlizzy);
+
+
+            DrawGui();
 		}
 		/*
          * Called when the game is leaving the scene (or exiting). Perform any clean up work here.
          */
 		private void OnDestroy()
 		{
-			//Debug.Log("ChampagneBottle [" + GetInstanceID().ToString("X")
-			//          + "][" + Time.time.ToString("0.0000") + "]: OnDestroy");
-			toggleToolbarButton (false);
-			if (toolbarButton != null)
-				toolbarButton.Destroy ();
-		}
+            //Debug.Log("ChampagneBottle [" + GetInstanceID().ToString("X")
+            //          + "][" + Time.time.ToString("0.0000") + "]: OnDestroy");
 
-		#endregion Unity Stuff
+            toolbarControl.OnDestroy();
+            Destroy(toolbarControl);
+        }
+
+#endregion Unity Stuff
 
 
-		#region Name Stuff
+#region Name Stuff
 
 		private static String GenerateName()
 		{
@@ -354,70 +324,52 @@ namespace ChampagneBottle
 			return output;
 		}
 
-		#endregion Name Stuff
+#endregion Name Stuff
 
 
-		#region Gooey Stuff
+#region Gooey Stuff
 
-		public ApplicationLauncherButton InitAppLauncherButton()
+		public void InitAppLauncherButton()
 		{
-			ApplicationLauncherButton button = null;
-			Texture2D iconTexture = null;
-			if (GameDatabase.Instance.ExistsTexture("Champagne/Textures/icon_button"))
-			{
-				iconTexture = GameDatabase.Instance.GetTexture("Champagne/Textures/icon_button", false);
-			}
 
-			if (iconTexture == null)
-			{
-				Debug.LogError("ChampagneBottle -- Failed to load icon_button");
-			}
-			else
-			{
-				button = ApplicationLauncher.Instance.AddModApplication(OnAppLauncherTrue, OnAppLauncherFalse,
-					null, null, null, null,
-					ApplicationLauncher.AppScenes.VAB | ApplicationLauncher.AppScenes.SPH,
-					 iconTexture);
+            toolbarControl = gameObject.AddComponent<ToolbarControl>();
+            toolbarControl.AddToAllToolbars(OnAppLauncherTrue, OnAppLauncherFalse,
+                ApplicationLauncher.AppScenes.VAB | ApplicationLauncher.AppScenes.SPH,
+                "ChampagneBottle_NS",
+                "champagneBottleButton",
+                "Champagne/PluginData/Textures/icon_button_active",
+                "Champagne/PluginData/Textures/icon_button",
+                "Champagne/PluginData/Textures/icon_button_active_24",
+                "Champagne/PluginData/Textures/icon_button_24",
+                "Champagne Bottle"
+            );
+            toolbarControl.UseBlizzy(HighLogic.CurrentGame.Parameters.CustomParams<CB>().useBlizzy);
+        }
 
-				if (button == null)
-				{
-					Debug.LogError("ChampagneBottle -- Unable to create AppLauncher button");
-				}
-			}
-
-			return button;
-		}
-
-		public static void RemoveAppLauncherButton(ApplicationLauncherButton button)
+        public void RemoveAppLauncherButton()
 		{
-			ApplicationLauncher.Instance.RemoveModApplication (button);
-		}
+            //ApplicationLauncher.Instance.RemoveModApplication (button);
+            toolbarControl.OnDestroy();
+            Destroy(toolbarControl);
+        }
 
-		public static void OnAppLauncherTrue()
+		public void OnAppLauncherTrue()
 		{
-			if ( (!cfg.blizzyToolbar || !ToolbarManager.ToolbarAvailable)  && _appLauncherButton == null)
-			{
-				Debug.LogError("ChampagneBottle -- OnAppLauncherTrue called without a button?!?");
-				return;
-			}
-			EditorLogic.fetch.Lock(true, true, true, "ChampagneLocked");
-			//_editorLocked = true;
+            //EditorLogic.fetch.Lock(true, true, true, "ChampagneLocked");
+            //_editorLocked = true;
+            Debug.Log("OnAppLauncherTrue");
 			activated = true;
-			if (cfg.selectLanguageEveryTime)
-				_generated = false;
-		}
+			if (HighLogic.CurrentGame.Parameters.CustomParams<CB>().selectLanguageEveryTime)
+                languageSelected = false;
+            for (int i = 0; i < _generatedNames.Length; i++)
+                _generatedNames[i] = GenerateName();
+        }
 
-		public static void OnAppLauncherFalse()
+		public void OnAppLauncherFalse()
 		{
-			if ( (!cfg.blizzyToolbar || !ToolbarManager.ToolbarAvailable ) && _appLauncherButton == null)
-			{
-				Debug.LogError("ChampagneBottle -- OnAppLauncherFalse called without a button?!?");
-				return;
-			}
-            if (EditorLogic.fetch != null)
-			    EditorLogic.fetch.Unlock("ChampagneLocked");
-			//_editorLocked = false;
-			activated = false;
+            Debug.Log("OnAppLauncherFalse");
+
+            activated = false;
 		}
 
 
@@ -426,25 +378,9 @@ namespace ChampagneBottle
 			if (!activated) return;
 
 			GUI.skin = HighLogic.Skin;
-			WindowPos = GUILayout.Window(246243, WindowPos, WindowGui, "Champagne Bottle", GUILayout.MinWidth(100));
+			WindowPos = ClickThruBlocker.GUILayoutWindow(246243, WindowPos, WindowGui, "Champagne Bottle", GUILayout.MinWidth(100));
 
-			#if false
-			if (HighLogic.LoadedSceneIsEditor)
-			{
-				Vector2 mousePos = Input.mousePosition;
-				mousePos.y = Screen.height - mousePos.y;
-				if (WindowPos.Contains(mousePos) && !_editorLocked)
-				{
-					EditorLogic.fetch.Lock(true, true, true, "ChampagneLocked");
-					_editorLocked = true;
-				}
-				else if (!WindowPos.Contains(mousePos) && _editorLocked)
-				{
-					EditorLogic.fetch.Unlock("ChampagneLocked");
-					_editorLocked = false;
-				}
-			}
-			#endif
+
 		}
 
 		private void WindowGui(int windowId)
@@ -460,7 +396,7 @@ namespace ChampagneBottle
 				
 				GUILayout.BeginVertical();
 				String generateButtonText = "";
-				if (_generated)
+				if (languageSelected)
 				{
 					GUILayout.Label("Here are the KSC staff members' suggestions:", GUILayout.ExpandWidth(true));
 					foreach (String s in _generatedNames)
@@ -468,7 +404,8 @@ namespace ChampagneBottle
 						if (GUILayout.Button(s, mySty, GUILayout.ExpandWidth(true)))
 						{
 							EditorLogic.fetch.shipNameField.text = s;
-						}
+                            toolbarControl.SetFalse(true);
+                        }
 					}
 					generateButtonText = "Fire those guys!";
 					GUILayout.Space(16);
@@ -479,6 +416,7 @@ namespace ChampagneBottle
 					GUILayout.Label("Language: ", GUILayout.ExpandWidth(true));
 					String[] langOpts = {"English", "Kerbal", "Both"};
 					_lang = GUILayout.SelectionGrid(_lang, langOpts, 1, "toggle", GUILayout.ExpandWidth(true));
+ 
 					GUILayout.Space(16);
 				}
 
@@ -487,7 +425,10 @@ namespace ChampagneBottle
 				{
 					for (int i = 0; i < _generatedNames.Length; i++)
 						_generatedNames[i] = GenerateName();
-					_generated = true;
+                    if (!languageSelected)
+                        languageSelected = true;
+                    else
+					    _generated = true;
 				}
 				GUILayout.EndVertical();
 
@@ -503,6 +444,6 @@ namespace ChampagneBottle
 			}
 		}
 
-		#endregion Gooey Stuff
+#endregion Gooey Stuff
 	}
 }
