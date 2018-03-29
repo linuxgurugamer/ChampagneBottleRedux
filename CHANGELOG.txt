@@ -1,4 +1,8 @@
-﻿0.3.8
+﻿0.3.8.1
+	Updated .version to allow all of 1.4.1-1.4.99
+
+0.3.8
+		Updated for 1.4.1
 		Added support for clickThroughblocker
 		Added support for the Toolbar Controller
 		Added new stock settings page
