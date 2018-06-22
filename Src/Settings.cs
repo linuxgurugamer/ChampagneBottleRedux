@@ -21,9 +21,6 @@ namespace ChampagneBottle
         public override bool HasPresets { get { return true; } }
 
 
-        [GameParameters.CustomParameterUI("Use Blizzy Toolbar if available")]
-        public bool useBlizzy = false;
-
         [GameParameters.CustomParameterUI("select Language Every Time")]
         public bool selectLanguageEveryTime = false;
 

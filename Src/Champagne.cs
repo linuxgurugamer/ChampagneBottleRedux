@@ -32,7 +32,7 @@ using ToolbarControl_NS;
 
 namespace ChampagneBottle
 {
-	/*
+    /*
      * This project is meant to be a "Hello World" example showing how to make a part-less plugin.
      * 
      * The main class for your plug-in should implement MonoBehavior, which is a Unity class.
@@ -69,8 +69,16 @@ namespace ChampagneBottle
      * {KSP}/KSP_Data/output_log.txt.
      */
 
+    [KSPAddon(KSPAddon.Startup.MainMenu, true)]
+    public class RegisterToolbar : MonoBehaviour
+    {
+        void Start()
+        {
+            ToolbarControl.RegisterMod(ChampagneBottle.MODID, ChampagneBottle.MODNAME);
+        }
+    }
 
-	[KSPAddon(KSPAddon.Startup.EditorAny, false)]
+    [KSPAddon(KSPAddon.Startup.EditorAny, false)]
 	public class ChampagneBottle : MonoBehaviour
 	{
 		private static List<String> _patterns;
@@ -135,10 +143,6 @@ namespace ChampagneBottle
 		}
 		private void OnGUI()
 		{
-            if (toolbarControl != null)
-                toolbarControl.UseBlizzy(HighLogic.CurrentGame.Parameters.CustomParams<CB>().useBlizzy);
-
-
             DrawGui();
 		}
 		/*
@@ -324,26 +328,28 @@ namespace ChampagneBottle
 			return output;
 		}
 
-#endregion Name Stuff
+        #endregion Name Stuff
 
 
 #region Gooey Stuff
 
-		public void InitAppLauncherButton()
+        internal const string MODID = "ChampagneBottle_NS";
+        internal const string MODNAME = "Champagne Bottle";
+
+        public void InitAppLauncherButton()
 		{
 
             toolbarControl = gameObject.AddComponent<ToolbarControl>();
             toolbarControl.AddToAllToolbars(OnAppLauncherTrue, OnAppLauncherFalse,
                 ApplicationLauncher.AppScenes.VAB | ApplicationLauncher.AppScenes.SPH,
-                "ChampagneBottle_NS",
+                MODID,
                 "champagneBottleButton",
                 "Champagne/PluginData/Textures/icon_button_active",
                 "Champagne/PluginData/Textures/icon_button",
                 "Champagne/PluginData/Textures/icon_button_active_24",
                 "Champagne/PluginData/Textures/icon_button_24",
-                "Champagne Bottle"
+                MODNAME
             );
-            toolbarControl.UseBlizzy(HighLogic.CurrentGame.Parameters.CustomParams<CB>().useBlizzy);
         }
 
         public void RemoveAppLauncherButton()

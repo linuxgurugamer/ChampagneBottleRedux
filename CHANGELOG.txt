@@ -1,4 +1,10 @@
-﻿0.3.8.1
+﻿0.3.8.2
+	Added dependency checking
+	Updated to use latest version of ToolbarController
+	removed Blizzy option since it's now controlled by the ToolbarController
+	Deleted unused toolbarwrapper.cs file
+
+0.3.8.1
 	Updated .version to allow all of 1.4.1-1.4.99
 
 0.3.8

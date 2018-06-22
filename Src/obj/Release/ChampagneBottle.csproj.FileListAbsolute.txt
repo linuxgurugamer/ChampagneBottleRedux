@@ -45,7 +45,6 @@ D:\Users\jbb\github\ChampagneBottleRedux\src\bin\Release\TDx.TDxInput.dll
 D:\Users\jbb\github\ChampagneBottleRedux\src\obj\Release\ChampagneBottle.csproj.CoreCompileInputs.cache
 D:\Users\jbb\github\ChampagneBottleRedux\src\obj\Release\ChampagneBottle.dll
 D:\Users\jbb\github\ChampagneBottleRedux\src\obj\Release\ChampagneBottle.pdb
-D:\Users\jbb\github\ChampagneBottleRedux\src\bin\Release\ClickThroughBlocker.dll
 D:\Users\jbb\github\ChampagneBottleRedux\src\bin\Release\ToolbarControl.dll
 D:\Users\jbb\github\ChampagneBottleRedux\src\bin\Release\Ionic.Zip.dll
 D:\Users\jbb\github\ChampagneBottleRedux\src\bin\Release\RedShellSDK.dll
