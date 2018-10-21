@@ -47,6 +47,5 @@ D:\Users\jbb\github\ChampagneBottleRedux\src\obj\Release\ChampagneBottle.dll
 D:\Users\jbb\github\ChampagneBottleRedux\src\obj\Release\ChampagneBottle.pdb
 D:\Users\jbb\github\ChampagneBottleRedux\src\bin\Release\ToolbarControl.dll
 D:\Users\jbb\github\ChampagneBottleRedux\src\bin\Release\Ionic.Zip.dll
-D:\Users\jbb\github\ChampagneBottleRedux\src\bin\Release\RedShellSDK.dll
 D:\Users\jbb\github\ChampagneBottleRedux\src\obj\Release\ChampagneBottle.csprojResolveAssemblyReference.cache
 D:\Users\jbb\github\ChampagneBottleRedux\src\obj\Release\ChampagneBottle.csproj.CopyComplete
