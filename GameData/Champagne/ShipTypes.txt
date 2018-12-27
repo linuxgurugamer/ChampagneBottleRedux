@@ -1,0 +1,20 @@
+#Debris?
+D
+#Space Vehicle
+SV
+#Space Probe
+SP
+#RoVer
+RV
+#Lander Vehicle
+LV
+#SpaceCraft
+SC
+#Space Station
+SS
+#Colony
+Col
+#AstroNaught
+AN
+#Flag
+F
