@@ -1,4 +1,4 @@
-﻿/*
+/*
  * SimplePartlessPlugin.cs
  * 
  * Part of the KSP modding examples from Thunder Aerospace Corporation.
@@ -28,7 +28,8 @@ using KSP.UI.Screens;
 
 using ClickThroughFix;
 using ToolbarControl_NS;
-
+using System.Linq;
+using System.Text;
 
 namespace ChampagneBottle
 {
@@ -231,64 +232,32 @@ namespace ChampagneBottle
 
 		private static String GenerateShipClass()
 		{
-			String output = null;
-			switch (Ran.Next(6))
+			if (!_wordLists.ContainsKey("prefixes"))
 			{
-				case 0:
-					output = "M";
-					break; // Mankind's
-				case 1:
-					output = "S";
-					break; // System
-				case 2:
-					output = "K";
-					break; // Kerbal!
-				case 3:
-					output = "HM";
-					break; // Her/His Majesty's
-				case 4:
-					output = "A";
-					break; // Alliance
-				case 5:
-					output = "I";
-					break; // International
+				Debug.Log("\tWord list prefixes referenced for the first time, loading...");
+				_wordLists["prefixes"] = LoadList(KSPUtil.ApplicationRootPath + _path + "prefixes" + ".txt");
 			}
-			switch (_shipType)
+			if (!_wordLists.ContainsKey("ShipTypes"))
 			{
-				case VesselType.Debris:
-					output += "D";
-					break; // Debris?
-				case VesselType.Unknown:
-					output += "SV";
-					break; // Space Vehicle
-				case VesselType.Probe:
-					output += "SP";
-					break; // Space Probe
-				case VesselType.Rover:
-					output += "RV";
-					break; // RoVer
-				case VesselType.Lander:
-					output += "LV";
-					break; // Lander Vehicle
-				case VesselType.Ship:
-					output += "SC";
-					break; // SpaceCraft
-				case VesselType.Station:
-					output += "SS";
-					break; // Space Station
-				case VesselType.Base:
-					output += "Col";
-					break; // Colony
-				case VesselType.EVA:
-					output += "AN";
-					break; // AstroNaught
-				case VesselType.Flag:
-					output += "F";
-					break; // Flag
-				default:
-					output += "?";
-					break;
+				Debug.Log("\tWord list ShipTypes referenced for the first time, loading...");
+				_wordLists["ShipTypes"] = LoadList(KSPUtil.ApplicationRootPath + _path + "ShipTypes" + ".txt");
 			}
+
+			var output = new StringBuilder();
+
+			var pfx = _wordLists["prefixes"];
+			if (pfx.Count > 0)
+				output.Append(pfx[Ran.Next(0, pfx.Count)]);
+			else
+				output.Append("K");
+			
+			var st = _wordLists["ShipTypes"];
+			if (st.Count > (int)_shipType)
+				output.Append(st[(int)_shipType]);
+			else if (st.Count > 0)
+				output.Append(st[Ran.Next(0, st.Count)]);
+			else
+				output.Append("SS");
 
 			//public enum VesselType
 			//{
@@ -303,13 +272,13 @@ namespace ChampagneBottle
 			//    EVA = 8,
 			//    Flag = 9,
 			//}
-			return output;
+			return output.ToString();
 		}
 
 		private static List<String> LoadList(String filePath)
 		{
 			Debug.Log("Loading list from " + filePath);
-			return new List<string>( File.ReadAllLines(filePath) );
+			return new List<string>( File.ReadAllLines(filePath).Where(l=>!l.StartsWith("#")) );
 		}
 
 		private static String Possess(String pronoun)
