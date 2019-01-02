@@ -17,7 +17,7 @@ namespace ChampagneBottle
 		private static readonly String CONFIG_BASE_FOLDER = ROOT_PATH + "GameData/";
 		private static String BASE_FOLDER = CONFIG_BASE_FOLDER + "Champagne/";
 		private static String NODENAME = "ChampagneBottle";
-		private static String CFG_FILE = BASE_FOLDER + "ChampagneBottle.cfg";
+		private static String CFG_FILE = BASE_FOLDER + "PluginData/ChampagneBottle.cfg";
 
 
 		public static List<String> ShipTypes = new List<String> ();

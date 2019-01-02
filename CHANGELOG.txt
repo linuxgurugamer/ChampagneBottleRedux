@@ -1,4 +1,11 @@
-﻿0.3.8.3
+﻿0.3.9
+	Moved cfg file into PluginData
+	Moved all wordlists into PluginData/WordLists
+	Thanks to github user @Archimagus:
+		Added the ability to have custom ship prefixes
+	Removed KSP_VERSION_MAX from .version file
+
+0.3.8.3
 	Version bump for 1.5 rebuild
 
 0.3.8.2

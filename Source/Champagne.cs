@@ -93,10 +93,10 @@ namespace ChampagneBottle
 
 		private static bool activated = false;
 
-		private static String _path = "/GameData/Champagne/";
+		private static String _path = "/GameData/Champagne/PluginData/WordLists/";
 		private readonly String[] _generatedNames = new String[5];
 
-		private bool _generated = false;
+		//private bool _generated = false;
         private static bool languageSelected = false;
         
 		private const float LogInterval = 5.0f;
@@ -402,8 +402,8 @@ namespace ChampagneBottle
 						_generatedNames[i] = GenerateName();
                     if (!languageSelected)
                         languageSelected = true;
-                    else
-					    _generated = true;
+                    //else
+					//    _generated = true;
 				}
 				GUILayout.EndVertical();
 
