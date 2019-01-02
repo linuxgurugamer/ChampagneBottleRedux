@@ -27,7 +27,7 @@
 1:Champagne, ChampagneBottle.version, ChampagneBottleRedux
 
 # 2:PROJNAME, PROJFILE, VERSIONFILE, PLUGINSFOLDER
-2:Champagne,Src/ChampagneBottle.csproj,ChampagneBottle.version,GameData/Champagne/Plugins
+2:Champagne,Source/ChampagneBottle.csproj,ChampagneBottle.version,GameData/Champagne/Plugins
 
 # 3:SOURCEFILE, DESTDIR
 3:ChampagneBottle.version,GameData/Champagne
