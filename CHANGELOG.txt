@@ -1,4 +1,7 @@
-﻿0.3.9
+﻿3.0.9.2
+	Version bump for 1.7.2
+
+0.3.9
 	Moved cfg file into PluginData
 	Moved all wordlists into PluginData/WordLists
 	Thanks to github user @Archimagus:
