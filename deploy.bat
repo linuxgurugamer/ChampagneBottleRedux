@@ -1,6 +1,6 @@
 ﻿rem unusable line
 
-set H=R:\KSP_1.7.2_dev
+set H=%KSPDIR%
 set GAMEDIR=Champagne
 
 echo %H%
