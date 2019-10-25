@@ -1,7 +1,7 @@
-﻿3.0.10.1
+﻿0.3.10.1
 	Updated MiniAVC to 1.4.0
 
-3.0.10
+0.3.10
 	Added InstallChecker
 	Rebuild for 1.8
 
