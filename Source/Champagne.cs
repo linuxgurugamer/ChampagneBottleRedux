@@ -165,13 +165,32 @@ namespace ChampagneBottle
 
 		private static String GenerateName()
 		{
+			int namingPriority = 0;
 			_shipType = VesselType.Unknown;
+
+			Part p = VesselNaming.FindPriorityNamePart(EditorLogic.fetch.ship);
+			_shipType = p.vesselType;
+
+
+#if false
 			foreach (var part in EditorLogic.fetch.ship.Parts)
 			{
-				if (part.vesselType == VesselType.Unknown) continue;
-				_shipType = part.vesselType;
-				break;
+				var m = part.FindModuleImplementing<VesselNaming>();
+				if (m != null)
+				{
+					if (m.namingPriority > namingPriority)
+					{
+						namingPriority = m.namingPriority;
+						_shipType = m.vesselType;
+					}
+				}
+				else
+				{
+					if (namingPriority == 0 && part.vesselType == VesselType.Unknown) continue;
+					_shipType = part.vesselType;
+				}
 			}
+#endif
 			Debug.Log("ChampagneBottle: Ship type: " + _shipType);
 				
 			bool scr = false;
@@ -259,19 +278,6 @@ namespace ChampagneBottle
 			else
 				output.Append("SS");
 
-			//public enum VesselType
-			//{
-			//    Debris = 0,
-			//    Unknown = 1,
-			//    Probe = 2,
-			//    Rover = 3,
-			//    Lander = 4,
-			//    Ship = 5,
-			//    Station = 6,
-			//    Base = 7,
-			//    EVA = 8,
-			//    Flag = 9,
-			//}
 			return output.ToString();
 		}
 
@@ -297,7 +303,7 @@ namespace ChampagneBottle
 			return output;
 		}
 
-        #endregion Name Stuff
+#endregion Name Stuff
 
 
 #region Gooey Stuff
@@ -407,10 +413,6 @@ namespace ChampagneBottle
 				}
 				GUILayout.EndVertical();
 
-				//DragWindow makes the window draggable. The Rect specifies which part of the window it can by dragged by, and is 
-				//clipped to the actual boundary of the window. You can also pass no argument at all and then the window can by
-				//dragged by any part of it. Make sure the DragWindow command is AFTER all your other GUI input stuff, or else
-				//it may "cover up" your controls and make them stop responding to the mouse.
 				GUI.DragWindow();
 			}
 			catch (Exception ex)

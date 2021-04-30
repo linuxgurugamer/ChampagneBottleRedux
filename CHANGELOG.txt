@@ -1,5 +1,9 @@
 ﻿ChangeLog
 
+0.3.11
+	Thanks to forum user @etmoonshade for this update:
+		Updated ShipTypes.txt for new ship types
+
 0.3.10.3
 	Really did the MiniAVC update
 

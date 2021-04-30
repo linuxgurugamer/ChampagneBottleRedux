@@ -1,20 +1,30 @@
+# Note - part types changed (many were added) by a new version of KSP.
+# Data from https://kerbalspaceprogram.com/api/_vessel_8cs.html#afa39c7ec7cc0926b332fcd2d77425edb
 #Debris?
 D
-#Space Vehicle
-SV
-#Space Probe
-SP
-#RoVer
+#SpaceObject
+AS
+#Unknown
+UK
+#Probe
+PR
+#Relay
+RL
+#Rover
 RV
-#Lander Vehicle
+#Lander
 LV
-#SpaceCraft
-SC
+#Ship
+SV
+#Plane
+PL
 #Space Station
 SS
-#Colony
-Col
-#AstroNaught
+#Base
+BA
+#EVA
 AN
 #Flag
 F
+#DeployedScienceController
+#DeployedSciencePart

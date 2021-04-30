@@ -36,8 +36,9 @@ D:\Users\jbb\github\ChampagneBottleRedux\Source\bin\Release\ChampagneBottle.dll
 D:\Users\jbb\github\ChampagneBottleRedux\Source\bin\Release\ChampagneBottle.pdb
 D:\Users\jbb\github\ChampagneBottleRedux\Source\bin\Release\ClickThroughBlocker.dll
 D:\Users\jbb\github\ChampagneBottleRedux\Source\bin\Release\ToolbarControl.dll
-D:\Users\jbb\github\ChampagneBottleRedux\Source\obj\Release\ChampagneBottle.csprojResolveAssemblyReference.cache
 D:\Users\jbb\github\ChampagneBottleRedux\Source\obj\Release\ChampagneBottle.csproj.CoreCompileInputs.cache
 D:\Users\jbb\github\ChampagneBottleRedux\Source\obj\Release\ChampagneBottle.csproj.CopyComplete
 D:\Users\jbb\github\ChampagneBottleRedux\Source\obj\Release\ChampagneBottle.dll
 D:\Users\jbb\github\ChampagneBottleRedux\Source\obj\Release\ChampagneBottle.pdb
+D:\Users\jbb\github\ChampagneBottleRedux\Source\bin\Release\ClickThroughBlocker.pdb
+D:\Users\jbb\github\ChampagneBottleRedux\Source\obj\Release\ChampagneBottle.csprojAssemblyReference.cache
