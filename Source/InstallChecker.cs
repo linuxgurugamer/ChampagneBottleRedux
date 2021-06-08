@@ -33,7 +33,6 @@ namespace ChampagneBottle
             {
                 v = "VersionNotAvailable";
             }
-            Debug.Log("[" + title + "] Version " + v);
         }
     }
 

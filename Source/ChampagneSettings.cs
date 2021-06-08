@@ -43,15 +43,8 @@ namespace ChampagneBottle
 				if (root != null) {
 					ConfigNode settings = root.GetNode (NODENAME);
 					if (settings != null) {
-						Debug.Log ("ChampagneBottle: Load Settings: " + settings.ToString ());
 
-						//blizzyToolbar = bool.Parse (SafeLoad (settings.GetValue ("blizzy"), blizzyToolbar));
 						patternfile = SafeLoad (settings.GetValue ("patterns"), patternfile);
-						//selectLanguageEveryTime = bool.Parse(SafeLoad(settings.GetValue("selectLanguageEveryTime"), selectLanguageEveryTime));
-
-						//Debug.Log ("blizzyToolbar: " + blizzyToolbar.ToString ());
-						Debug.Log ("patternfile: " + patternfile);
-						//Debug.Log("selectLanguageEveryTime: " + selectLanguageEveryTime.ToString());
 					} else {
 						Debug.Log ("No ChampagneBottle settings found");
 					}

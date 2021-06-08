@@ -80,32 +80,32 @@ namespace ChampagneBottle
     }
 
     [KSPAddon(KSPAddon.Startup.EditorAny, false)]
-	public class ChampagneBottle : MonoBehaviour
-	{
-		private static List<String> _patterns;
-		private static Dictionary<String, List<String>> _wordLists;
+    public class ChampagneBottle : MonoBehaviour
+    {
+        private static List<String> _patterns;
+        private static Dictionary<String, List<String>> _wordLists;
 
-		private static readonly Random Ran = new Random();
+        private static readonly Random Ran = new Random();
 
-		private static int _lang;
+        private static int _lang;
 
-		private static VesselType _shipType;
+        private static VesselType _shipType;
 
-		private static bool activated = false;
+        private static bool activated = false;
 
-		private static String _path = "/GameData/Champagne/PluginData/WordLists/";
-		private readonly String[] _generatedNames = new String[5];
+        private static String _path = "/GameData/Champagne/PluginData/WordLists/";
+        private readonly String[] _generatedNames = new String[5];
 
-		//private bool _generated = false;
+        //private bool _generated = false;
         private static bool languageSelected = false;
-        
-		private const float LogInterval = 5.0f;
-        
-		protected Rect WindowPos = new Rect(Screen.width/2, Screen.height/2, 320, 0);
-        ToolbarControl toolbarControl = null;
-        
 
-		ChampagneSettings cfg;
+        private const float LogInterval = 5.0f;
+
+        protected Rect WindowPos = new Rect(Screen.width / 2, Screen.height / 2, 320, 0);
+        ToolbarControl toolbarControl = null;
+
+
+        ChampagneSettings cfg;
 
         #region Unity Stuff
 
@@ -117,40 +117,32 @@ namespace ChampagneBottle
 
             _wordLists = new Dictionary<string, List<string>>();
 
-            Debug.Log("ChampagneBottle [" + GetInstanceID().ToString("X")
-                      + "][" + Time.time.ToString("0.0000") + "]: Awake: " + name);
-
             InitAppLauncherButton();
 
         }
 
         // Called next.
         private void Start()
-		{
-			try
-			{
-				Debug.Log("ChampagneBottle [" + GetInstanceID().ToString("X")
-				          + "][" + Time.time.ToString("0.0000") + "]: Start");
-
-				_patterns = LoadList(KSPUtil.ApplicationRootPath + _path + "patterns.txt");
-
-
+        {
+            try
+            {
+                _patterns = LoadList(KSPUtil.ApplicationRootPath + _path + "patterns.txt");
             }
-			catch (Exception ex)
-			{
-				Debug.LogError(ex.ToString());
-			}
+            catch (Exception ex)
+            {
+                Debug.LogError(ex.ToString());
+            }
  ;
-		}
-		private void OnGUI()
-		{
+        }
+        private void OnGUI()
+        {
             DrawGui();
-		}
-		/*
+        }
+        /*
          * Called when the game is leaving the scene (or exiting). Perform any clean up work here.
          */
-		private void OnDestroy()
-		{
+        private void OnDestroy()
+        {
             //Debug.Log("ChampagneBottle [" + GetInstanceID().ToString("X")
             //          + "][" + Time.time.ToString("0.0000") + "]: OnDestroy");
 
@@ -158,161 +150,156 @@ namespace ChampagneBottle
             Destroy(toolbarControl);
         }
 
-#endregion Unity Stuff
+        #endregion Unity Stuff
 
 
-#region Name Stuff
+        #region Name Stuff
 
-		private static String GenerateName()
-		{
-			int namingPriority = 0;
-			_shipType = VesselType.Unknown;
+        private static String GenerateName()
+        {
+            int namingPriority = 0;
+            _shipType = VesselType.Unknown;
 
-			Part p = VesselNaming.FindPriorityNamePart(EditorLogic.fetch.ship);
-			_shipType = p.vesselType;
+            Part p = VesselNaming.FindPriorityNamePart(EditorLogic.fetch.ship);
+            if (p != null)
+                _shipType = p.vesselType;
+            else
+            {
+                //p = EditorLogic.RootPart;
+                //_shipType = p.vesselType;
 
+                foreach (var part in EditorLogic.fetch.ship.Parts)
+                {
+                    var m = part.FindModuleImplementing<VesselNaming>();
+                    if (m != null)
+                    {
+                        if (m.namingPriority > namingPriority)
+                        {
+                            namingPriority = m.namingPriority;
+                            _shipType = m.vesselType;
+                        }
+                    }
+                    else
+                    {
+                        if (namingPriority == 0 && part.vesselType == VesselType.Unknown) continue;
+                        _shipType = part.vesselType;
+                    }
+                }
 
-#if false
-			foreach (var part in EditorLogic.fetch.ship.Parts)
-			{
-				var m = part.FindModuleImplementing<VesselNaming>();
-				if (m != null)
-				{
-					if (m.namingPriority > namingPriority)
-					{
-						namingPriority = m.namingPriority;
-						_shipType = m.vesselType;
-					}
-				}
-				else
-				{
-					if (namingPriority == 0 && part.vesselType == VesselType.Unknown) continue;
-					_shipType = part.vesselType;
-				}
-			}
-#endif
-			Debug.Log("ChampagneBottle: Ship type: " + _shipType);
-				
-			bool scr = false;
-			switch (_lang)
-			{
-				case 1:
-					scr = true;
-					break;
-				case 2:
-					scr = (Ran.Next(2) == 1);
-					break;
-			}
-			return ParsePattern( Choose(_patterns), scr );
-		}
+            }
 
-		private static String ParsePattern(String pattern, bool scr)
-		{
-			Debug.Log("Parsing pattern " + pattern);
-			String output = pattern;
-			while (Regex.IsMatch(output, "<'?\\w+>"))
-			{
-				Match i = Regex.Match(output, "<'?\\w+>");
-				bool pos = (i.Value[1] == '\'');
-				String listName = Regex.Match(i.Value, "\\w+").Value;
-				String wordChosen;
-				if (listName != "C")
-				{
-					Debug.Log("\tTag is " + i.Value + ", list name = " + listName);
-					if (!_wordLists.ContainsKey(listName))
-					{
-						Debug.Log("\tWord list " + listName + " referenced for the first time, loading...");
-						_wordLists[listName] = LoadList(KSPUtil.ApplicationRootPath + _path + listName + ".txt");
-					}
-					wordChosen = Capitalise(Choose(_wordLists[listName], scr));
-					if (pos) wordChosen = Possess(wordChosen);
-					Debug.Log("\tChosen word: " + wordChosen);
-				}
-				else
-				{
-					wordChosen = GenerateShipClass();
-				}
-				output = output.Remove(i.Index, i.Length).Insert(i.Index, wordChosen);
-				Debug.Log("\tString is now " + output);
-			}
-			return output;
-		}
+            bool scr = false;
+            switch (_lang)
+            {
+                case 1:
+                    scr = true;
+                    break;
+                case 2:
+                    scr = (Ran.Next(2) == 1);
+                    break;
+            }
+            return ParsePattern(Choose(_patterns), scr);
+        }
 
-		private static String Choose(List<String> fromList, bool scramble = false)
-		{
-			if (!scramble)
-			{
-				return fromList[Ran.Next(fromList.Count)];
-			}
-			String a = fromList[Ran.Next(fromList.Count)];
-			String b = fromList[Ran.Next(fromList.Count)];
-			return a.Substring(0, a.Length/2) + b.Substring(b.Length/2);
-		}
+        private static String ParsePattern(String pattern, bool scr)
+        {
+            String output = pattern;
+            while (Regex.IsMatch(output, "<'?\\w+>"))
+            {
+                Match i = Regex.Match(output, "<'?\\w+>");
+                bool pos = (i.Value[1] == '\'');
+                String listName = Regex.Match(i.Value, "\\w+").Value;
+                String wordChosen;
+                if (listName != "C")
+                {
+                    if (!_wordLists.ContainsKey(listName))
+                    {
+                        _wordLists[listName] = LoadList(KSPUtil.ApplicationRootPath + _path + listName + ".txt");
+                    }
+                    wordChosen = Capitalise(Choose(_wordLists[listName], scr));
+                    if (pos) wordChosen = Possess(wordChosen);
+                }
+                else
+                {
+                    wordChosen = GenerateShipClass();
+                }
+                output = output.Remove(i.Index, i.Length).Insert(i.Index, wordChosen);
+            }
+            return output;
+        }
 
-		private static String GenerateShipClass()
-		{
-			if (!_wordLists.ContainsKey("prefixes"))
-			{
-				Debug.Log("\tWord list prefixes referenced for the first time, loading...");
-				_wordLists["prefixes"] = LoadList(KSPUtil.ApplicationRootPath + _path + "prefixes" + ".txt");
-			}
-			if (!_wordLists.ContainsKey("ShipTypes"))
-			{
-				Debug.Log("\tWord list ShipTypes referenced for the first time, loading...");
-				_wordLists["ShipTypes"] = LoadList(KSPUtil.ApplicationRootPath + _path + "ShipTypes" + ".txt");
-			}
+        private static String Choose(List<String> fromList, bool scramble = false)
+        {
+            if (!scramble)
+            {
+                return fromList[Ran.Next(fromList.Count)];
+            }
+            String a = fromList[Ran.Next(fromList.Count)];
+            String b = fromList[Ran.Next(fromList.Count)];
+            return a.Substring(0, a.Length / 2) + b.Substring(b.Length / 2);
+        }
 
-			var output = new StringBuilder();
+        private static String GenerateShipClass()
+        {
+            if (!_wordLists.ContainsKey("prefixes"))
+            {
+                _wordLists["prefixes"] = LoadList(KSPUtil.ApplicationRootPath + _path + "prefixes" + ".txt");
+            }
+            if (!_wordLists.ContainsKey("ShipTypes"))
+            {
+                _wordLists["ShipTypes"] = LoadList(KSPUtil.ApplicationRootPath + _path + "ShipTypes" + ".txt");
+            }
 
-			var pfx = _wordLists["prefixes"];
-			if (pfx.Count > 0)
-				output.Append(pfx[Ran.Next(0, pfx.Count)]);
-			else
-				output.Append("K");
-			
-			var st = _wordLists["ShipTypes"];
-			if (st.Count > (int)_shipType)
-				output.Append(st[(int)_shipType]);
-			else if (st.Count > 0)
-				output.Append(st[Ran.Next(0, st.Count)]);
-			else
-				output.Append("SS");
+            var output = new StringBuilder();
 
-			return output.ToString();
-		}
+            var pfx = _wordLists["prefixes"];
+            if (pfx.Count > 0)
+                output.Append(pfx[Ran.Next(0, pfx.Count)]);
+            else
+                output.Append("K");
 
-		private static List<String> LoadList(String filePath)
-		{
-			Debug.Log("Loading list from " + filePath);
-			return new List<string>( File.ReadAllLines(filePath).Where(l=>!l.StartsWith("#")) );
-		}
+            var st = _wordLists["ShipTypes"];
+            if (st.Count > (int)_shipType)
+                output.Append(st[(int)_shipType]);
+            else if (st.Count > 0)
+                output.Append(st[Ran.Next(0, st.Count)]);
+            else
+                output.Append("SS");
 
-		private static String Possess(String pronoun)
-		{
-			return pronoun.EndsWith("s") ? pronoun + "'" : pronoun + "'s";
-		}
+            return output.ToString();
+        }
 
-		private static String Capitalise(String str)
-		{
-			String[] split = str.Split(' ');
-			String output = "";
-			foreach (String i in split)
-			{
-				output += i.Substring(0, 1).ToUpper() + i.Substring(1).ToLower();
-			}
-			return output;
-		}
+        private static List<String> LoadList(String filePath)
+        {
+            return new List<string>(File.ReadAllLines(filePath).Where(l => !l.StartsWith("#")));
+        }
 
-#endregion Name Stuff
+        private static String Possess(String pronoun)
+        {
+            return pronoun.EndsWith("s") ? pronoun + "'" : pronoun + "'s";
+        }
+
+        private static String Capitalise(String str)
+        {
+            String[] split = str.Split(' ');
+            String output = "";
+            foreach (String i in split)
+            {
+                output += i.Substring(0, 1).ToUpper() + i.Substring(1).ToLower();
+            }
+            return output;
+        }
+
+        #endregion Name Stuff
 
 
-#region Gooey Stuff
+        #region Gooey Stuff
 
         internal const string MODID = "ChampagneBottle_NS";
         internal const string MODNAME = "Champagne Bottle";
 
         public void InitAppLauncherButton()
-		{
+        {
 
             toolbarControl = gameObject.AddComponent<ToolbarControl>();
             toolbarControl.AddToAllToolbars(OnAppLauncherTrue, OnAppLauncherFalse,
@@ -328,99 +315,94 @@ namespace ChampagneBottle
         }
 
         public void RemoveAppLauncherButton()
-		{
+        {
             //ApplicationLauncher.Instance.RemoveModApplication (button);
             toolbarControl.OnDestroy();
             Destroy(toolbarControl);
         }
 
-		public void OnAppLauncherTrue()
-		{
-            //EditorLogic.fetch.Lock(true, true, true, "ChampagneLocked");
-            //_editorLocked = true;
-            Debug.Log("OnAppLauncherTrue");
-			activated = true;
-			if (HighLogic.CurrentGame.Parameters.CustomParams<CB>().selectLanguageEveryTime)
+        public void OnAppLauncherTrue()
+        {
+            activated = true;
+            if (HighLogic.CurrentGame.Parameters.CustomParams<CB>().selectLanguageEveryTime)
                 languageSelected = false;
             for (int i = 0; i < _generatedNames.Length; i++)
                 _generatedNames[i] = GenerateName();
         }
 
-		public void OnAppLauncherFalse()
-		{
-            Debug.Log("OnAppLauncherFalse");
-
+        public void OnAppLauncherFalse()
+        {
             activated = false;
-		}
+        }
 
 
-		private void DrawGui()
-		{
-			if (!activated) return;
+        private void DrawGui()
+        {
+            if (!activated) return;
 
-			GUI.skin = HighLogic.Skin;
-			WindowPos = ClickThruBlocker.GUILayoutWindow(246243, WindowPos, WindowGui, "Champagne Bottle", GUILayout.MinWidth(100));
+            GUI.skin = HighLogic.Skin;
+            WindowPos = ClickThruBlocker.GUILayoutWindow(246243, WindowPos, WindowGui, "Champagne Bottle", GUILayout.MinWidth(100));
 
 
-		}
+        }
 
-		private void WindowGui(int windowId)
-		{
-			try
-			{
-				var mySty = new GUIStyle(GUI.skin.button);
-				mySty.normal.textColor = mySty.focused.textColor = Color.white;
-				mySty.hover.textColor = mySty.active.textColor = Color.yellow;
-				mySty.onNormal.textColor =
-					mySty.onFocused.textColor = mySty.onHover.textColor = mySty.onActive.textColor = Color.green;
-				mySty.padding = new RectOffset(8, 8, 8, 8);
-				
-				GUILayout.BeginVertical();
-				String generateButtonText = "";
-				if (languageSelected)
-				{
-					GUILayout.Label("Here are the KSC staff members' suggestions:", GUILayout.ExpandWidth(true));
-					foreach (String s in _generatedNames)
-					{
-						if (GUILayout.Button(s, mySty, GUILayout.ExpandWidth(true)))
-						{
-							EditorLogic.fetch.shipNameField.text = s;
+        private void WindowGui(int windowId)
+        {
+            try
+            {
+                var mySty = new GUIStyle(GUI.skin.button);
+                mySty.normal.textColor = mySty.focused.textColor = Color.white;
+                mySty.hover.textColor = mySty.active.textColor = Color.yellow;
+                mySty.onNormal.textColor =
+                    mySty.onFocused.textColor = mySty.onHover.textColor = mySty.onActive.textColor = Color.green;
+                mySty.padding = new RectOffset(8, 8, 8, 8);
+
+                GUILayout.BeginVertical();
+                String generateButtonText = "";
+                if (languageSelected)
+                {
+                    GUILayout.Label("Here are the KSC staff members' suggestions:", GUILayout.ExpandWidth(true));
+                    foreach (String s in _generatedNames)
+                    {
+                        if (GUILayout.Button(s, mySty, GUILayout.ExpandWidth(true)))
+                        {
+                            EditorLogic.fetch.shipNameField.text = s;
                             toolbarControl.SetFalse(true);
                         }
-					}
-					generateButtonText = "Fire those guys!";
-					GUILayout.Space(16);
-				}
-				else
-				{
-					generateButtonText = "What should we call this?";
-					GUILayout.Label("Language: ", GUILayout.ExpandWidth(true));
-					String[] langOpts = {"English", "Kerbal", "Both"};
-					_lang = GUILayout.SelectionGrid(_lang, langOpts, 1, "toggle", GUILayout.ExpandWidth(true));
- 
-					GUILayout.Space(16);
-				}
+                    }
+                    generateButtonText = "Fire those guys!";
+                    GUILayout.Space(16);
+                }
+                else
+                {
+                    generateButtonText = "What should we call this?";
+                    GUILayout.Label("Language: ", GUILayout.ExpandWidth(true));
+                    String[] langOpts = { "English", "Kerbal", "Both" };
+                    _lang = GUILayout.SelectionGrid(_lang, langOpts, 1, "toggle", GUILayout.ExpandWidth(true));
 
-				//GUILayout.Button is "true" when clicked
-				if (GUILayout.Button(generateButtonText, mySty, GUILayout.ExpandWidth(true)))
-				{
-					for (int i = 0; i < _generatedNames.Length; i++)
-						_generatedNames[i] = GenerateName();
+                    GUILayout.Space(16);
+                }
+
+                //GUILayout.Button is "true" when clicked
+                if (GUILayout.Button(generateButtonText, mySty, GUILayout.ExpandWidth(true)))
+                {
+                    for (int i = 0; i < _generatedNames.Length; i++)
+                        _generatedNames[i] = GenerateName();
                     if (!languageSelected)
                         languageSelected = true;
                     //else
-					//    _generated = true;
-				}
-				GUILayout.EndVertical();
+                    //    _generated = true;
+                }
+                GUILayout.EndVertical();
 
-				GUI.DragWindow();
-			}
-			catch (Exception ex)
-			{
-				Debug.LogError(ex.ToString());
-			}
-		}
+                GUI.DragWindow();
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError(ex.ToString());
+            }
+        }
 
-#endregion Gooey Stuff
-	}
+        #endregion Gooey Stuff
+    }
 }
