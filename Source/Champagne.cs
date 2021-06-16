@@ -102,7 +102,7 @@ namespace ChampagneBottle
         private const float LogInterval = 5.0f;
 
         protected Rect WindowPos = new Rect(Screen.width / 2, Screen.height / 2, 320, 0);
-        ToolbarControl toolbarControl = null;
+        static ToolbarControl toolbarControl = null;
 
 
         ChampagneSettings cfg;
@@ -132,7 +132,6 @@ namespace ChampagneBottle
             {
                 Debug.LogError(ex.ToString());
             }
- ;
         }
         private void OnGUI()
         {
@@ -143,49 +142,53 @@ namespace ChampagneBottle
          */
         private void OnDestroy()
         {
-            //Debug.Log("ChampagneBottle [" + GetInstanceID().ToString("X")
-            //          + "][" + Time.time.ToString("0.0000") + "]: OnDestroy");
-
+#if false
             toolbarControl.OnDestroy();
             Destroy(toolbarControl);
+#endif
         }
 
-        #endregion Unity Stuff
+#endregion Unity Stuff
 
 
-        #region Name Stuff
+#region Name Stuff
 
         private static String GenerateName()
         {
-            int namingPriority = 0;
             _shipType = VesselType.Unknown;
 
             Part p = VesselNaming.FindPriorityNamePart(EditorLogic.fetch.ship);
             if (p != null)
-                _shipType = p.vesselType;
+            {
+                _shipType = p.vesselNaming.vesselType;
+            }
             else
             {
-                //p = EditorLogic.RootPart;
-                //_shipType = p.vesselType;
-
+                _shipType = VesselType.Unknown;
                 foreach (var part in EditorLogic.fetch.ship.Parts)
                 {
-                    var m = part.FindModuleImplementing<VesselNaming>();
-                    if (m != null)
+                    foreach (var m in part.Modules)
                     {
-                        if (m.namingPriority > namingPriority)
+                        if (m is ModuleCommand)
                         {
-                            namingPriority = m.namingPriority;
-                            _shipType = m.vesselType;
+                            part.vesselNaming = new VesselNaming();
+                            part.vesselNaming.namingPriority = 10;
+
+                            if (part.CrewCapacity == 0)
+                                part.vesselNaming.vesselType = VesselType.Probe;
+                            else
+                                part.vesselNaming.vesselType = VesselType.Ship;
+                            _shipType = part.vesselNaming.vesselType;
+                            break;
                         }
                     }
-                    else
-                    {
-                        if (namingPriority == 0 && part.vesselType == VesselType.Unknown) continue;
-                        _shipType = part.vesselType;
-                    }
+                    if (_shipType != VesselType.Unknown)
+                        break;
                 }
-
+                if (_shipType == VesselType.Unknown)
+                {
+                    return "";
+                }
             }
 
             bool scr = false;
@@ -290,10 +293,10 @@ namespace ChampagneBottle
             return output;
         }
 
-        #endregion Name Stuff
+#endregion Name Stuff
 
 
-        #region Gooey Stuff
+#region Gooey Stuff
 
         internal const string MODID = "ChampagneBottle_NS";
         internal const string MODNAME = "Champagne Bottle";
@@ -367,6 +370,8 @@ namespace ChampagneBottle
                         if (GUILayout.Button(s, mySty, GUILayout.ExpandWidth(true)))
                         {
                             EditorLogic.fetch.shipNameField.text = s;
+                            Part p = VesselNaming.FindPriorityNamePart(EditorLogic.fetch.ship);
+                            p.vesselNaming.vesselName = s;
                             toolbarControl.SetFalse(true);
                         }
                     }
@@ -403,6 +408,6 @@ namespace ChampagneBottle
             }
         }
 
-        #endregion Gooey Stuff
+#endregion Gooey Stuff
     }
 }

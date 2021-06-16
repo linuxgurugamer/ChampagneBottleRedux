@@ -1,5 +1,16 @@
 ﻿ChangeLog
 
+0.3.11.3
+	Fixed detection of vessel type if previously set by KSP
+
+0.3.11.2
+	Creates a VesselNaming class if none exist.
+		Sets vessel type to probe if first part found with a commandmodule can't have crew
+		Sets vessel type to shp if crew is possible
+
+	Does not work on vessels without a commandmodule
+	Removing vessel naming will revert ship time to Debris, this is KSP, not this mod
+
 0.3.11.1
 	Fixed Nullref which occurs when VesselNaming.FindPriorityNamePart(EditorLogic.fetch.ship) doesn't find a part (weird)
 	Removed old logging code
