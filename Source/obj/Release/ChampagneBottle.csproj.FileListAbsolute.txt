@@ -32,13 +32,12 @@ D:\Users\jbb\github\ChampagneBottleRedux\bin\Release\UnityEngine.xml
 D:\Users\jbb\github\ChampagneBottleRedux\obj\Release\ChampagneBottle.dll
 D:\Users\jbb\github\ChampagneBottleRedux\obj\Release\ChampagneBottle.pdb
 D:\Users\jbb\github\ChampagneBottleRedux\bin\Release\System.Xml.dll
-D:\Users\jbb\github\ChampagneBottleRedux\Source\bin\Release\ChampagneBottle.dll
-D:\Users\jbb\github\ChampagneBottleRedux\Source\bin\Release\ChampagneBottle.pdb
 D:\Users\jbb\github\ChampagneBottleRedux\Source\bin\Release\ClickThroughBlocker.dll
 D:\Users\jbb\github\ChampagneBottleRedux\Source\bin\Release\ToolbarControl.dll
 D:\Users\jbb\github\ChampagneBottleRedux\Source\obj\Release\ChampagneBottle.csproj.CoreCompileInputs.cache
 D:\Users\jbb\github\ChampagneBottleRedux\Source\obj\Release\ChampagneBottle.csproj.CopyComplete
-D:\Users\jbb\github\ChampagneBottleRedux\Source\obj\Release\ChampagneBottle.dll
-D:\Users\jbb\github\ChampagneBottleRedux\Source\obj\Release\ChampagneBottle.pdb
-D:\Users\jbb\github\ChampagneBottleRedux\Source\bin\Release\ClickThroughBlocker.pdb
 D:\Users\jbb\github\ChampagneBottleRedux\Source\obj\Release\ChampagneBottle.csprojAssemblyReference.cache
+D:\Users\jbb\github\ChampagneBottleRedux\Source\bin\Release\ChampagneBottleRedux.dll
+D:\Users\jbb\github\ChampagneBottleRedux\Source\bin\Release\ChampagneBottleRedux.pdb
+D:\Users\jbb\github\ChampagneBottleRedux\Source\obj\Release\ChampagneBottleRedux.dll
+D:\Users\jbb\github\ChampagneBottleRedux\Source\obj\Release\ChampagneBottleRedux.pdb

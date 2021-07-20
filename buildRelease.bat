@@ -10,7 +10,6 @@ set RELEASEDIR=d:\Users\jbb\release
 set ZIP="c:\Program Files\7-zip\7z.exe"
 
 copy /Y "%1%2" "GameData\%GAMEDIR%\Plugins"
-copy /Y ..\MiniAVC.dll GameData\%GAMEDIR%
 copy /Y %GAMEDIR%.version GameData\%GAMEDIR%
 
 if "%LICENSE%" NEQ "" copy /y  %LICENSE% GameData\%GAMEDIR%

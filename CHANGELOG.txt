@@ -1,5 +1,9 @@
 ﻿ChangeLog
 
+0.3.11.4
+	Added AssemblyFileVersion
+	Updated version file for ksp 1.12
+
 0.3.11.3
 	Fixed detection of vessel type if previously set by KSP
 
