@@ -1,5 +1,8 @@
 ﻿ChangeLog
 
+0.3.11.5
+	Fixed path for loading images (broken by new launcher)
+
 0.3.11.4
 	Added AssemblyFileVersion
 	Updated version file for ksp 1.12
