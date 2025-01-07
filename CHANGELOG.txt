@@ -1,5 +1,9 @@
 ﻿ChangeLog
 
+0.3.11.6
+	Updated version file to use github for version info
+	Copied web page to README-WEB.md file
+
 0.3.11.5
 	Fixed path for loading images (broken by new launcher)
 
